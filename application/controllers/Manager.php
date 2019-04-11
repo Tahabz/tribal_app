@@ -39,23 +39,35 @@ class Manager extends CI_Controller{
         $this->load->view('templates/footer');
     }
 
-    public function decline($id){
+    public function decline(){
+        $id_conge = $this->input->post('id_conge');
+        $id_user = $this->input->post('id_user');
         $role = $this->session->userdata('role');
         if(!$role == 2){
             redirect('404');
         }
-        $this->Manager_model->decline($id);
-        $this->session->set_flashdata('demand_declined', 'leave demand declined!');
-        redirect('manager/dashboard');
+        if($this->Manager_model->decline($id_conge, $id_user)){
+            $this->session->set_flashdata('demand_declined', 'leave demand declined!');
+            redirect('manager/dashboard');
+        }
+        else{
+            redirect('404');
+        }
     }
 
-    public function accept($id){
+    public function accept($id_conge, $id_user){
+        // echo 'conge : '.$id_conge. '  user: '.$id_user;
+        // die();
         $role = $this->session->userdata('role');
         if(!$role == 2){
             redirect('404');
         }
-        $this->Manager_model->accept($id);
-        $this->session->set_flashdata('demand_accepted', 'leave demand accepted!');
-        redirect('manager/dashboard');
+        if($this->Manager_model->accept($id_conge, $id_user)){
+            $this->session->set_flashdata('demand_accepted', 'leave demand accepted!');
+            redirect('manager/dashboard');
+        }
+        else{
+            redirect('404');
+        }
     }
 }

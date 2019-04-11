@@ -10,18 +10,18 @@ class Users extends MY_Controller{
         $this->load->helper('url');
     }
 
-    // public function show(){
-    //     $role = $this->Users_model->get_user_role($user_logged);
-    //     if($role == 0){
-    //         redirect('dashboard');
-    //     }
-    //     elseif($role == 1){
-    //         $this->team_chefRole($user_logged, $username, $role);
-    //     }
-    //     elseif($role == 2){
-    //         $this->managerRole($user_logged, $username, $role);
-    //     }
-    // }
+    public function show(){
+        $role = $this->Users_model->get_user_role($user_logged);
+        if($role == 0){
+            redirect('salaried');
+        }
+        elseif($role == 1){
+            redirect('chef/dashboard');
+        }
+        elseif($role == 2){
+            redirect('manager/dashboard');
+        }
+    }
 
     public function index(){
         if($this->session->userdata('role') !== ""){
